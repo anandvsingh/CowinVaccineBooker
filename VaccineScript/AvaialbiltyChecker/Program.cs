@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Threading;
 
 using AvaiabiltyChecker.DataObjects;
+using System.IO;
 
 namespace ConsoleApp1
 {
@@ -15,6 +16,7 @@ namespace ConsoleApp1
     //
     class Program
     {
+        static System.Media.SoundPlayer player = new System.Media.SoundPlayer(Path.GetFullPath(@".\Resources\button-2.wav"));
         static HttpClient httpClient = new HttpClient();
 
         static void HandleCenters (Centers centerInformation )
@@ -27,8 +29,8 @@ namespace ConsoleApp1
             centerInformation.sessions
                              .Where(x => x.min_age_limit == 18)
                              .Where(x => x.available_capacity > 0)
-                             .ToList().ForEach(x => x.CentreInformation());
-            Console.WriteLine("Refreshed Serach");
+                             .ToList().ForEach(x => x.CentreInformation(player));
+            //Console.WriteLine("Refreshed Serach"); UnComment if you get anxious if it is actually working
         }
 
         static async Task<Centers> GetCenters(DistrictModel districtModel)
@@ -72,7 +74,7 @@ namespace ConsoleApp1
                 {
                     Console.WriteLine("Exception occured: " + ex);
                 }
-                Thread.Sleep(4000);
+                Thread.Sleep(5000);
             }
             
         }

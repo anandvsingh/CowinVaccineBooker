@@ -29,8 +29,10 @@ namespace AvaiabiltyChecker.DataObjects
         public string vaccine { get; set; }
         public List<string> slots { get; set; }
 
-        public void CentreInformation()
+        public void CentreInformation(System.Media.SoundPlayer player)
         {
+            Task.Run(() => player.Play());
+            Console.WriteLine("Time: " + System.DateTime.Now);
             Console.WriteLine("PinCode: " +  this.pincode + "  Available Capacity" + this.available_capacity + "  Center id: " + this.center_id + "  Center Name: " + this.name );
         }
     }
