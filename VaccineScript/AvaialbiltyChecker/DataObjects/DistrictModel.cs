@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AvaiabiltyChecker.DataObjects
 {
-    public class findByDistrictModel
+    public class DistrictModel
     {
         public string AcceptLanguage { get; set; }
 
