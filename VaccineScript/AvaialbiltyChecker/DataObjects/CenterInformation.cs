@@ -31,7 +31,7 @@ namespace AvaiabiltyChecker.DataObjects
 
         public void CentreInformation()
         {
-            Console.WriteLine(this.center_id + this.name + this.pincode + this.available_capacity);
+            Console.WriteLine("PinCode: " +  this.pincode + "  Available Capacity" + this.available_capacity + "  Center id: " + this.center_id + "  Center Name: " + this.name );
         }
     }
 

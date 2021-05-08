@@ -28,6 +28,7 @@ namespace ConsoleApp1
                              .Where(x => x.min_age_limit == 18)
                              .Where(x => x.available_capacity > 0)
                              .ToList().ForEach(x => x.CentreInformation());
+            Console.WriteLine("Refreshed Serach");
         }
 
         static async Task<Centers> GetCenters(DistrictModel districtModel)
