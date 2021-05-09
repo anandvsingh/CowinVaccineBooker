@@ -16,11 +16,14 @@ namespace ConsoleApp1
     //
     class Program
     {
+#if Windows
         static System.Media.SoundPlayer player = new System.Media.SoundPlayer(Path.GetFullPath(@".\Resources\button-2.wav"));
+#endif
         static HttpClient httpClient = new HttpClient();
 
         static void HandleCenters (Centers centerInformation )
         {
+            int flag = 0;
             if (centerInformation == null)
             {
                 Console.WriteLine("Center Information came back as null");
@@ -29,7 +32,13 @@ namespace ConsoleApp1
             centerInformation.sessions
                              .Where(x => x.min_age_limit == 18)
                              .Where(x => x.available_capacity > 0)
-                             .ToList().ForEach(x => x.CentreInformation(player));
+                             .ToList().ForEach(x => { 
+                                 x.CentreInformation();
+                                 flag++; });
+#if Windows
+            if (flag > 0)
+                Task.Run(() => player.Play());
+#endif
             //Console.WriteLine("Refreshed Serach"); UnComment if you get anxious if it is actually working
         }
 
