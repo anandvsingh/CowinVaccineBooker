@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Threading;
 
@@ -29,15 +25,17 @@ namespace ConsoleApp1
                 Console.WriteLine("Center Information came back as null");
                 return;
             }
-            centerInformation.sessions
-                             .Where(x => x.min_age_limit == 18)
-                             .Where(x => x.available_capacity > 0)
-                             .ToList().ForEach(x => { 
-                                 x.CentreInformation();
-                                 flag++; });
+            centerInformation.centers.ForEach(x => {
+                if (x.AvailableSessions())
+                    flag++;
+                });
+
 #if Windows
             if (flag > 0)
+            {
                 Task.Run(() => player.Play());
+                Console.WriteLine("\n\n\n\n\n");
+            }
 #endif
             //Console.WriteLine("Refreshed Serach"); UnComment if you get anxious if it is actually working
         }
@@ -49,14 +47,16 @@ namespace ConsoleApp1
             HttpResponseMessage responseMessage = await httpClient.GetAsync(getPath);
             if (responseMessage.IsSuccessStatusCode)
             {
-                centerInformation = (await responseMessage.Content.ReadAsAsync<Centers>());
+                centerInformation = await responseMessage.Content.ReadAsAsync<Centers>();
+                //centerInformation = JsonConvert.DeserializeObject<Centers>(centerInformationAsString);
             }
+            responseMessage.Content = null;
             return centerInformation;
         }
 
         private static string QueryMaker(DistrictModel districtModel)
         {
-            return "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByDistrict?district_id=" + districtModel.district_id + "&date=" + districtModel.date; 
+            return "https://cdn-api.co-vin.in/api/v2/appointment/sessions/calendarByDistrict?district_id=" + districtModel.district_id + "&date=" + districtModel.date; 
         }
 
         static void Main(string[] args)
