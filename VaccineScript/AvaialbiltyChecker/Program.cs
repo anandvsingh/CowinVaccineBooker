@@ -5,11 +5,12 @@ using System.Threading;
 
 using AvaiabiltyChecker.DataObjects;
 using System.IO;
+using System.Collections.Generic;
 
 namespace ConsoleApp1
 {
-    //BBMP district id = 2294
-    //
+    //BBMP district id = 294
+    //BLR Urban = 265
     class Program
     {
 #if Windows
@@ -66,24 +67,32 @@ namespace ConsoleApp1
 
         static async Task RunAsync()
         {
-            var district = new DistrictModel
+            var districts = new List<DistrictModel>
             {
-                district_id = "294",
-                date = System.DateTime.Now.ToString("dd-MM-yyyy")
+                 new DistrictModel
+                 {
+                      district_id = "265",
+                      date = System.DateTime.Now.ToString("dd-MM-yyyy")
+                 },
+                 new DistrictModel
+                 {
+                     district_id = "294",
+                     date = System.DateTime.Now.ToString("dd-MM-yyyy")
+                 }
             };
+            int i = 0;
+            int length = districts.Count;
             while (true)
             {
                 try
                 {
-                    var centers = await GetCenters(district);
-
-                    HandleCenters(await GetCenters(district));
+                    HandleCenters(await GetCenters(districts[i%length]));
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine("Exception occured: " + ex);
                 }
-                Thread.Sleep(5000);
+                Thread.Sleep(4000);
             }
             
         }

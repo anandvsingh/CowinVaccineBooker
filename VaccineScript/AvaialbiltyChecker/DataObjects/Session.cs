@@ -12,10 +12,10 @@ namespace AvaiabiltyChecker.DataObjects
         public string vaccine { get; set; }
         public List<string> slots { get; set; }
 
-        public void SessionInformation(int pincode, int center_id, string center_name)
+        public void SessionInformation(int pincode, int center_id, string center_name, string fee_type)
         {
             Console.WriteLine("***********New Slots avaialble************" + "Time: " + System.DateTime.Now);
-            Console.WriteLine("PinCode: " + pincode + "\nAvailable Capacity: " + this.available_capacity + "\nCenter id: " + center_id + "  Center Name: " + center_name + "\nDate of appointment: " + this.date + "\nEligibilty Age: " + this.min_age_limit);
+            Console.WriteLine("PinCode: " + pincode + "\nAvailable Capacity: " + this.available_capacity + "\nCenter id: " + center_id + "  Center Name: " + center_name + "\nDate of appointment: " + this.date + "\nEligibilty Age: " + this.min_age_limit + "\nFee Type: " + fee_type);
         }
     }
 }

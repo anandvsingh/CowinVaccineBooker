@@ -28,7 +28,7 @@ namespace AvaiabiltyChecker.DataObjects
             this.sessions.Where(_ => _.available_capacity > 0)
                          .Where(_ => _.min_age_limit == 18)
                          .ToList().ForEach(x => {
-                             x.SessionInformation(pincode, center_id, name);
+                             x.SessionInformation(pincode, center_id, name, fee_type);
                              flag++; });
             if (flag > 0)
                 return true;
